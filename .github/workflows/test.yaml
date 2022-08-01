@@ -20,6 +20,7 @@ on:
   push:
     branches:
       - nightly
+      - master
   schedule:
     # minute (0-59)
     # hour (0-23)
