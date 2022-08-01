@@ -14,12 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-name: Nightly tests
+name: Nightly tests from github
 
 on:
   push:
     branches:
       - nightly
+      - master
+  pull_request:
+    branches:
       - master
   schedule:
     # minute (0-59)
@@ -31,7 +34,7 @@ on:
     - cron: "50 23 * * *"
 
 jobs:
-  nightly_tests:
+  nightly_tests_from_github:
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -69,7 +72,8 @@ jobs:
 
           python3 -m torch.utils.collect_env
 
-          python3 -m pip install kaldifeat
+          # https://github.com/pypa/pip/issues/6375#issuecomment-478936791
+          python3 -m pip install --no-use-pep517 git+https://github.com/csukuangfj/kaldifeat
 
       - name: Install PyTorch ${{ matrix.torch }}
         shell: bash
@@ -81,7 +85,7 @@ jobs:
 
           python3 -m torch.utils.collect_env
 
-          python3 -m pip install kaldifeat
+          python3 -m pip install --no-use-pep517 git+https://github.com/csukuangfj/kaldifeat
 
       - name: Run
         shell: bash

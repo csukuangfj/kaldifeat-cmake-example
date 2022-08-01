@@ -43,5 +43,10 @@ string(APPEND CMAKE_CXX_FLAGS " ${TORCH_CXX_FLAGS} ")
 string(APPEND CMAKE_CXX_FLAGS " ${KALDIFEAT_CXX_FLAGS} ")
 message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
 
+set(CMAKE_CXX_STANDARD 14 CACHE STRING "The C++ version to be used.")
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+message(STATUS "C++ Standard version: ${CMAKE_CXX_STANDARD}")
+
 add_executable(main main.cc)
 target_link_libraries(main PRIVATE ${TORCH_LIBRARIES} ${KALDIFEAT_LIBRARIES})
