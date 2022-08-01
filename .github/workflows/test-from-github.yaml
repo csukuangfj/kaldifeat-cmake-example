@@ -57,13 +57,6 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
 
-      - name: Install GCC 7
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          sudo apt-get install -y gcc-7 g++-7
-          echo "CC=/usr/bin/gcc-7" >> $GITHUB_ENV
-          echo "CXX=/usr/bin/g++-7" >> $GITHUB_ENV
-
       - name: Display GCC version
         run: |
           gcc --version
@@ -78,7 +71,8 @@ jobs:
 
           python3 -m torch.utils.collect_env
 
-          python3 -m pip install git+https://github.com/csukuangfj/kaldifeat
+          # https://github.com/pypa/pip/issues/6375#issuecomment-478936791
+          python3 -m pip install --no-use-pep517 git+https://github.com/csukuangfj/kaldifeat
 
       - name: Install PyTorch ${{ matrix.torch }}
         shell: bash
@@ -90,7 +84,7 @@ jobs:
 
           python3 -m torch.utils.collect_env
 
-          python3 -m pip install git+https://github.com/csukuangfj/kaldifeat
+          python3 -m pip install --no-use-pep517 git+https://github.com/csukuangfj/kaldifeat
 
       - name: Run
         shell: bash
